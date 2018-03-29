@@ -20,6 +20,7 @@ This will be installed as python3
 
         1. sudo apt-get update
         2. sudo apt-get install mysql-server
+        3. sudo apt-get install libmysqlclient-dev
 
 ```
 
