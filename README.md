@@ -1,4 +1,4 @@
-# Grievance Portal
+# Student Portal
 
 ## Installation
 1. Install Python 3.6.5
