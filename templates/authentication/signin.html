@@ -1,25 +1,31 @@
-<html lang="en"><script>(function(){var PluginArray=function(plugins){var last=plugins.length;for(var i=0;i<last;i++){this[i]=this[plugins[i].name]=plugins[i];}var Plugin=function(prop){for(var i in prop){this[i]=prop[i];}};Plugin.prototype.item=function(){};Plugin.prototype.namedItem=function(){};var dummy=new Plugin({description:"DjVu Viewer Extension for Google Chrome",filename:"djvu.js",name:"DjVu Viewer Extension",version:"",});this[last]=this[dummy.name]=dummy;Object.defineProperty(this,"length",{get:function(){return last+1}});};PluginArray.prototype.item=function(index){return this[index];};PluginArray.prototype.namedItem=function(name){for(var i=0;i<this.length;i++){if(this[i].name===name){return this[i];}}};PluginArray.prototype.refresh=function(){};var plugins=new PluginArray(navigator.plugins);Object.defineProperty(navigator,"plugins",{get:function(){return plugins}});})()</script><head>
+<html lang="en">
+    {% load staticfiles %}  
+<!--
+    <script>(function(){var PluginArray=function(plugins){var last=plugins.length;for(var i=0;i<last;i++){this[i]=this[plugins[i].name]=plugins[i];}var Plugin=function(prop){for(var i in prop){this[i]=prop[i];}};Plugin.prototype.item=function(){};Plugin.prototype.namedItem=function(){};var dummy=new Plugin({description:"DjVu Viewer Extension for Google Chrome",filename:"djvu.js",name:"DjVu Viewer Extension",version:"",});this[last]=this[dummy.name]=dummy;Object.defineProperty(this,"length",{get:function(){return last+1}});};PluginArray.prototype.item=function(index){return this[index];};PluginArray.prototype.namedItem=function(name){for(var i=0;i<this.length;i++){if(this[i].name===name){return this[i];}}};PluginArray.prototype.refresh=function(){};var plugins=new PluginArray(navigator.plugins);Object.defineProperty(navigator,"plugins",{get:function(){return plugins}});})()</script><head>
+    -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
+    <!--
     <link rel="icon" href="../../../../favicon.ico">
-
-    <title>Floating labels example for Bootstrap</title>
+    -->
+    <title>Login Page</title>
 
     <!-- Bootstrap core CSS -->
-    <link href="../../../../dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
 
     <!-- Custom styles for this template -->
-    <link href="floating-labels.css" rel="stylesheet">
+    <link href="{% static 'css/floating-examples.css' %}" rel="stylesheet">
   </head>
 
   <body>
     <form class="form-signin">
       <div class="text-center mb-4">
+        <!--
         <img class="mb-4" src="https://getbootstrap.com/assets/brand/bootstrap-solid.svg" alt="" width="72" height="72">
-        <h1 class="h3 mb-3 font-weight-normal">Floating labels</h1>
-        <p>Build form controls with floating labels via the <code>:placeholder-shown</code> pseudo-element. <a href="https://caniuse.com/#feat=css-placeholder-shown">Works in latest Chrome, Safari, and Firefox.</a></p>
+        -->
+        <h1 class="h3 mb-3 font-weight-normal">Student Portal Login</h1>
       </div>
 
       <div class="form-label-group">
