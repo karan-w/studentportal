@@ -38,21 +38,21 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
           <ul class="navbar-nav ml-auto">
-            <li class="nav-item active">
-              <a class="nav-link" href="#">Home
+            <!--<li class="nav-item active">-->
+              <a class="nav-link" href="{% url 'feed:feed' %}">Home
                 <!--
                 <span class="sr-only">(current)</span>
                 -->
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">Academics</a>
+              <a class="nav-link" href="{% url 'feed:academics_posts' %}">Academics</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">Clubs and Associations</a>
+              <a class="nav-link" href="{% url 'feed:clubs_and_association_posts' %}">Clubs and Associations</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">Sports</a>
+              <a class="nav-link" href="{% url 'feed:sports_posts' %}">Sports</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="{% url 'authentication:signout' %}">Logout</a>

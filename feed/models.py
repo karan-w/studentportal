@@ -10,19 +10,23 @@ class Post(models.Model):
     text = models.TextField()
     published_date = models.DateTimeField(blank=True, null=True)
     image = models.FileField(upload_to='documents/', null=True)
-    # ACADEMIC = 'AC'
-    # CLUBS = 'CL'
-    # ASSOCIATIONS = 'AS'
-    # CATEGORY_CHOICES = (
-    #     (ACADEMIC, 'Academics'),
-    #     (CLUBS, 'Clubs'),
-    #     (ASSOCIATIONS, 'Associations'),
-    # )
-    # category = models.CharField(
-    #     max_length=2,
-    #     choices=CATEGORY_CHOICES,
-    #     default=ACADEMIC,
-    # )
+    ACADEMIC = 'AC'
+    CLUBSANDASSOCIATIONS = 'CA'
+    CLASSREPRESENTATIVE = 'CR'
+    GENERAL = 'GN'
+    SPORTS = 'SP'
+    CATEGORY_CHOICES = (
+        (ACADEMIC, 'Academics'),
+        (CLUBSANDASSOCIATIONS, 'Clubs and Associations'),
+        (GENERAL,'General'),
+        (CLASSREPRESENTATIVE, 'Class Representative'),
+        (SPORTS, 'Sports'),
+    )
+    category = models.CharField(
+        max_length=2,
+        choices=CATEGORY_CHOICES,
+        default=ACADEMIC,
+    )
 
     def __str__(self):
         return self.text
