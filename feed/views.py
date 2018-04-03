@@ -59,3 +59,45 @@ def search_posts(request):
         except EmptyPage:
             posts = paginator.page(paginator.num_pages)
         return render(request, 'feed/searchresults.html', {'posts': posts})
+
+def academic_posts(request):
+    if request.method == "POST":
+        posts_list = Post.objects.filter(text__iexact=request.POST['search_text'])[:50]
+        paginator = Paginator(posts_list, 10)
+
+        page = request.GET.get('page', 1)
+        try:
+            posts = paginator.page(page)
+        except PageNotAnInteger:
+            posts = paginator.page(1)
+        except EmptyPage:
+            posts = paginator.page(paginator.num_pages)
+        return render(request, 'feed/academics.html', {'posts': posts})
+
+def sports_posts(request):
+    if request.method == "POST":
+        posts_list = Post.objects.filter(text__iexact=request.POST['search_text'])[:50]
+        paginator = Paginator(posts_list, 10)
+
+        page = request.GET.get('page', 1)
+        try:
+            posts = paginator.page(page)
+        except PageNotAnInteger:
+            posts = paginator.page(1)
+        except EmptyPage:
+            posts = paginator.page(paginator.num_pages)
+        return render(request, 'feed/sports.html', {'posts': posts})
+
+def clubsasso_posts(request):
+    if request.method == "POST":
+        posts_list = Post.objects.filter(text__iexact=request.POST['search_text'])[:50]
+        paginator = Paginator(posts_list, 10)
+
+        page = request.GET.get('page', 1)
+        try:
+            posts = paginator.page(page)
+        except PageNotAnInteger:
+            posts = paginator.page(1)
+        except EmptyPage:
+            posts = paginator.page(paginator.num_pages)
+        return render(request, 'feed/clubsassociations.html', {'posts': posts})
