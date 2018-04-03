@@ -2,6 +2,9 @@ from django.shortcuts import render, get_object_or_404, redirect, HttpResponseRe
 from django.http import HttpResponse
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
+from feed.models import *
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+
 # Create your views here.
 
 def signin(request):
@@ -19,7 +22,17 @@ def signin(request):
             return render(request, 'authentication/signin.html', {'error' : 'User is not active. Please contact admin.'})
         else :
             login(request, user)
-            return render(request, 'feed/feed.html', {})
+            posts_list = Post.objects.all().order_by('-published_date')[:50]
+            print(len(posts_list))
+            paginator = Paginator(posts_list, 10)
+            page = request.GET.get('page', 1)
+            try:
+                posts = paginator.page(page)
+            except PageNotAnInteger:
+                posts = paginator.page(1)
+            except EmptyPage:
+                posts = paginator.page(paginator.num_pages)
+            return render(request, 'feed/feed.html', {'posts':posts})
 
 def signout(request):
     logout(request)
