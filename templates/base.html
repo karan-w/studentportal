@@ -10,16 +10,21 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Blog Home - Start Bootstrap Template</title>
+    <title>Student Portal</title>
 
     <!--Reference -->
     <!--<link rel="stylesheet" href="{% static 'owlcarousel/owl.theme.default.min.css' %}">-->
     <!-- Bootstrap core CSS -->
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous" rel="stylesheet">
 
+    <!--Reference -->
+    <!--<link rel="stylesheet" href="{% static 'owlcarousel/owl.theme.default.min.css' %}">-->
+    <!-- Bootstrap core CSS -->
     <!-- Custom styles for this template -->
+    <link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
     <link href="{% static 'css/blog-home.css' %}" rel="stylesheet">
-
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    
   </head>
 
   <body>
@@ -39,10 +44,10 @@
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">Faculty</a>
+              <a class="nav-link" href="#">Academics</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">Clubs</a>
+              <a class="nav-link" href="#">Clubs and Associations</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="#">Careers</a>
@@ -64,8 +69,18 @@
           <br>
 
               <div class="form-group" >
-                <textarea class="form-control" rows="5" id="post" placeholder="Write your post here..."></textarea>
-                <button type="submit" class="btn btn-primary">Submit</button>
+                <textarea class="form-control" rows="5" id="post" placeholder="Write your post here...
+                 "></textarea>
+                 <!--
+                 <input type="file" class="form-control-file" id="exampleFormControlFile1">
+                 -->
+                 <input type="file" class="form-control-file" id="exampleFormControlFile1" style="display:none"/>
+                 <button onclick="myf()" id="OpenImgUpload"><i class="material-icons">attachment</i></button>
+                 <script>
+                 $('#OpenImgUpload').click(function(){ $('#exampleFormControlFile1').trigger('click'); });
+                 </script>
+                 <button type="submit" class="btn btn-primary">Submit</button>
+              
               </div>
 
 
@@ -136,7 +151,7 @@
               <div class="input-group">
                 <input type="text" class="form-control" placeholder="Search for...">
                 <span class="input-group-btn">
-                  <button class="btn btn-secondary" type="button">Go!</button>
+                  <button class="btn btn-secondary" type="button" id="readonly">Go!</button>
                 </span>
               </div>
             </div>
@@ -178,17 +193,50 @@
           </div>
 
           <!-- Side Widget -->
-          <div class="card my-4">
-            <h5 class="card-header">Projects</h5>
-            <div class="card-body">
-              
-            </div>
-          </div>
           <div class="card my-5">
             <h5 class="card-header">Time Table</h5>
             <div class="card-body">
-              
-            </div>
+              <table class="table table-bordered">
+                <thead>
+                  <tr>
+                  <th>
+                      Time
+                  </th>
+                  <th>
+                    subject	
+                  </th>	
+                  </tr>
+                
+                </thead>	
+                <tbody>
+                <tr>
+                 <td> 8-9</td><td><input type="text" > </td></tr>
+                 <tr> 
+                 <td> 9-10</td><td><input type="text" > </td> </tr> 
+                  <tr> 
+                 <td> 10-11</td><td><input type="text"> </td> </tr>
+                  <tr> 
+                 <td> 11-12</td><td><input type="text" > </td> </tr>
+                  <tr> 
+                 <td> 12-1</td><td> <input type="text"> </td></tr>
+                  <tr> 
+                 <td>2-3</td><td> <input type="text"></td></tr>   
+                  <tr> 
+                 <td>3-4</td><td> <input type="text"> </td></tr>
+                  <tr> 
+                 <td>4-5</td><td> <input type="text"></td> </tr>
+                </tbody>
+                
+                </table>
+                <button onclick="myFunction()" type="submit" class="btn btn-primary">Update</button>	
+                <!--
+                <script>
+                  function myFunction() {
+                      document.getElementById("myText").readOnly=true;
+                  }
+                  </script>
+                -->
+              </div>
           </div>
         </div>
 
