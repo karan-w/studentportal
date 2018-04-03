@@ -5,7 +5,7 @@ from django.contrib.auth.decorators import login_required
 # Create your views here.
 
 def signin(request):
-    if request.user.is_authenticated() and request.user.is_active == True :
+    if request.user.is_authenticated==True and request.user.is_active == True :
         return redirect('/')
     if request.method == 'POST':
         user_name = request.POST.get('username')
