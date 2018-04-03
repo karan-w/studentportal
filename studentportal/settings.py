@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'feed',
+    'authentication',
 ]
 
 MIDDLEWARE = [
@@ -132,3 +133,7 @@ LOGIN_URL = '/authentication/signin/'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
+
+    # AUTHENTICATION_BACKENDS = (
+    #     'django.contrib.auth.backends.ModelBackend',
+    # )

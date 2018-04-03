@@ -9,7 +9,7 @@ class Post(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     text = models.TextField()
     published_date = models.DateTimeField(blank=True, null=True)
-    image = models.ImageField(upload_to=get_post_image_path, null=True, blank=True)
+    image = models.FileField(upload_to='documents/', null=True)
     # ACADEMIC = 'AC'
     # CLUBS = 'CL'
     # ASSOCIATIONS = 'AS'
