@@ -79,8 +79,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'studentportal_database',
-        'USER': 'admin',
-        'PASSWORD': '1234',
+        'USER': 'root',
+        'PASSWORD': 'Prahlad985',
     }
 }
 
