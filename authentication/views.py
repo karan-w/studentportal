@@ -7,6 +7,8 @@ from django.contrib.auth.models import User
 def signin(request):
     if request.user.is_authenticated==True and request.user.is_active == True :
         return redirect('/')
+    if request.method == 'GET':
+        return render(request, 'authentication/signin.html', None)
     if request.method == 'POST':
         username = request.POST.get('username')
         password = request.POST.get('password')
@@ -17,8 +19,8 @@ def signin(request):
             return render(request, 'authentication/signin.html', {'error' : 'User is not active. Please contact admin.'})
         else :
             login(request, user)
-    return render(request, 'authentication/signin.html', None)
+            return render(request, 'feed/feed.html', {})
 
 def signout(request):
     logout(request)
-    return render(request, 'authentication/signin.html', None)
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
