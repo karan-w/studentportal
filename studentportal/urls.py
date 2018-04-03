@@ -20,6 +20,6 @@ from django.conf.urls import url, include
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^', include('feed.urls')),
+    url(r'^', include('feed.urls', namespace='feed')),
     url(r'^authentication/', include('authentication.urls', namespace='authentication')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

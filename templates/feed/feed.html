@@ -12,7 +12,7 @@
           <br>
           <br>
           <br>
-          <form method="POST" action="{% url 'add_post' %}">
+          <form method="POST" action="{% url 'feed:add_post' %}">
             {% csrf_token %}
               <div class="form-group" >
                 <textarea class="form-control" rows="5" id="post" name="text" placeholder="Write your post here...
@@ -83,17 +83,20 @@
         <div class="col-md-4">
 
           <!-- Search Widget -->
+          <form method="POST" action="{% url 'feed:search_posts'%}">
+            {% csrf_token %}
           <div class="card my-4">
             <h5 class="card-header">Search</h5>
             <div class="card-body">
               <div class="input-group">
-                <input type="text" class="form-control" placeholder="Search for...">
+                <input type="text" class="form-control" name="search_text" placeholder="Search for...">
                 <span class="input-group-btn">
-                  <button class="btn btn-secondary" type="button" id="readonly">Go!</button>
+                  <button class="btn btn-secondary" type="submit" id="readonly">Go!</button>
                 </span>
               </div>
             </div>
           </div>
+          </form>
 
           <!-- Categories Widget -->
           <div class="card my-4">
