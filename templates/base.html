@@ -67,9 +67,10 @@
           <br>
           <br>
           <br>
-
+          <form method="POST" action="{% url 'add_post' %}">
+            {% csrf_token %}
               <div class="form-group" >
-                <textarea class="form-control" rows="5" id="post" placeholder="Write your post here...
+                <textarea class="form-control" rows="5" id="post" name="text" placeholder="Write your post here...
                  "></textarea>
                  <!--
                  <input type="file" class="form-control-file" id="exampleFormControlFile1">
@@ -82,6 +83,7 @@
                  <button type="submit" class="btn btn-primary">Submit</button>
               
               </div>
+            </form>
 
 
           <h3 class="my-4">Recent Posts
