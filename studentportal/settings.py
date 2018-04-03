@@ -79,8 +79,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'studentportal_database',
-        'USER': 'root',
-        'PASSWORD': 'Prahlad985',
+        'USER': 'admin',
+        'PASSWORD': '1234',
     }
 }
 
@@ -128,7 +128,7 @@ STATIC_URL = '/static/'
 
 STATICFILES_DIRS = ['./static']
 
-LOGIN_REDIRECT_URL = '/account/'
+LOGIN_REDIRECT_URL = '/'
 LOGIN_URL = '/authentication/signin/'
 
 MEDIA_URL = '/media/'
