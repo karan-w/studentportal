@@ -32,8 +32,22 @@ def signin(request):
                 posts = paginator.page(1)
             except EmptyPage:
                 posts = paginator.page(paginator.num_pages)
-            return render(request, 'feed/feed.html', {'posts':posts})
 
+            obj = Signup.objects.get(username=request.user)
+            
+            objsub = obj.subjects.split(',',100)
+            
+            mylist = list()
+            for x in objsub:
+                y = Subject.objects.get(subjectid=x)
+                if obj.category == 'cr':
+                   y.cr = True
+                else:
+                   y.cr = False 
+                mylist.append(y)
+                    
+            return render(request, 'feed/feed.html', {'posts':posts,'sublist':mylist})
+  
 def signout(request):
     logout(request)
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))

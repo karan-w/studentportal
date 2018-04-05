@@ -20,13 +20,14 @@
                  <!--
                  <input type="file" class="form-control-file" id="exampleFormControlFile1">
                  -->
-                 <input type="file" class="form-control-file" id="exampleFormControlFile1" style="display:none"/>
-                 <button onclick="myf()" id="OpenImgUpload"><i class="material-icons">attachment</i></button>
+                 <input type="file" class="form-control-file" name="postImage" id="exampleFormControlFile1" accept="image/*" multiple/>
+                 <!--
+                 <button onclick="myf()"><i class="material-icons">attachment</i></button>
                  <script>
                  $('#OpenImgUpload').click(function(){ $('#exampleFormControlFile1').trigger('click'); });
                  </script>
-                 <button type="submit" class="btn btn-primary">Submit</button>
-
+                -->
+                 <input type="submit" class="btn btn-primary" value="Submit">
               </div>
             </form>
 
@@ -102,37 +103,101 @@
           <div class="card my-4">
             <h5 class="card-header">Academics</h5>
             <div class="card-body">
+    
               <div class="row">
-                <div class="col-lg-6">
-                  <ul class="list-unstyled mb-0">
-                    <li>
-                      <a href="#">DBMS</a>
-                    </li>
-                    <li>
-                      <a href="#">SP</a>
-                    </li>
-                    <li>
-                      <a href="#">CA</a>
-                    </li>
-                  </ul>
-                </div>
-                <div class="col-lg-6">
-                  <ul class="list-unstyled mb-0">
-                    <li>
-                      <a href="#">OOP</a>
-                    </li>
-                    <li>
-                      <a href="#">ICA</a>
-                    </li>
-                    <li>
-                      <a href="#">Others</a>
-                    </li>
-                  </ul>
+                <div class="col-lg-12">
+                  <div class="container">
+                      {% for subobj in sublist %}
+                    <div class="panel-group" id="accordion">
+                    <div class="panel panel-default">
+                      <div class="panel-heading">
+                        <h6 class="panel-title">
+                          <a data-toggle="collapse" data-parent="#accordion" href="#{{ subobj.subjectid }}">{{ subobj.subjectid }}</a>
+                        </h6>
+                      </div>
+                      <div id="{{ subobj.subjectid }}" class="panel-collapse collapse">
+                        <div class="panel-body">
+                        <p><a href="{{ subobj.assignments }}" target="_blank">Assignments</a></p>
+                        
+                        {% if subobj.cr %}
+                        <div class="col-lg-12">
+                          <div class="input-group">
+
+                            <form method="POST" action="{% url 'feed:add_assign_link' %}">
+                                {% csrf_token %}
+                            <input type="text" name = "aslink" class="form-control" placeholder="Edit Link..">
+                            <input type="hidden" name="hiddentext" id="myField" value="" />
+                            <span class="input-group-btn">
+                                <input onclick="myfun()" type="submit" class="btn btn-primary" value="Submit">
+                            <script>
+                            function myfun(){
+                              document.getElementById('myField').value = "{{ subobj.subjectid }}";
+                            }
+                            </script>
+                              </span>
+                            </form>
+                          </div>
+                        </div>
+                        {% endif %}
+                      
+                        <p><a href="{{ subobj.notes }}" target="_blank">Notes</a></p>
+                        {% if subobj.cr %}
+                        <div class="col-lg-12">
+                          <div class="input-group">
+
+                            <form method="POST" action="{% url 'feed:add_notes_link' %}">
+                                {% csrf_token %}
+                            <input type="text" name = "ntlink" class="form-control" placeholder="Edit Link.."/>
+                            <input type="hidden" name="nthiddentext" id="ntmyField" value="" />
+                            <span class="input-group-btn">
+                                <input onclick="myfun()" type="submit" class="btn btn-primary" value="Submit">
+                            <script>
+                            function myfun(){
+                              document.getElementById('ntmyField').value = "{{ subobj.subjectid }}";
+                            }
+                            </script>
+                              </span>
+                            </form>
+                          </div>
+                        </div>
+                        {% endif %}
+                      
+
+                        <p><a href="{{ subobj.prevpapers }}" target="_blank">Previous Papers</a></p>
+                        {% if subobj.cr %}
+                        <div class="col-lg-12">
+                          <div class="input-group">
+
+                            <form method="POST" action="{% url 'feed:add_prev_link' %}">
+                                {% csrf_token %}
+                            <input type="text" name = "prlink" class="form-control" placeholder="Edit Link..">
+                            <input type="hidden" name="prhiddentext" id="prmyField" value="" />
+                            <span class="input-group-btn">
+                                <input onclick="myfun()" type="submit" class="btn btn-primary" value="Submit">
+                            <script>
+                            function myfun(){
+                              document.getElementById('prmyField').value = "{{ subobj.subjectid }}";
+                            }
+                            </script>
+                              </span>
+                            </form>
+                          </div>
+                        </div>
+                        {% endif %}
+                      
+
+                        </div>
+                      </div>
+                    </div>
+                    </div>
+                    {% endfor %}
+                  </div>
+  
                 </div>
               </div>
+            
             </div>
           </div>
-
           <!-- Side Widget -->
           <div class="card my-5">
             <h5 class="card-header">Time Table</h5>

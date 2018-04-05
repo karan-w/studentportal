@@ -30,3 +30,26 @@ class Post(models.Model):
 
     def __str__(self):
         return self.text
+
+
+
+class Signup(models.Model):
+    username= models.TextField()
+    emailid= models.TextField()
+    category= models.TextField()
+    subjects= models.TextField()
+    password= models.TextField()
+    
+    def __str__(self):
+        return self.username
+
+
+class Subject(models.Model):
+    subjectid = models.TextField()
+    assignments = models.TextField()
+    notes = models.TextField()
+    prevpapers= models.TextField()
+    cr=models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.subjectid        

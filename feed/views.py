@@ -47,8 +47,22 @@ def feed(request):
         posts = paginator.page(1)
     except EmptyPage:
         posts = paginator.page(paginator.num_pages)
+   
+    obj = Signup.objects.get(username=request.user)
+    
+    objsub = obj.subjects.split(',',100)
+    print(objsub)
 
-    return render(request, 'feed/feed.html', {'posts':posts})
+    mylist = list()
+    for x in objsub:
+        y = Subject.objects.get(subjectid=x)
+        if obj.category == 'cr':
+            y.cr = True
+        else:
+            y.cr = False 
+        mylist.append(y)
+                    
+    return render(request, 'feed/feed.html', {'posts':posts,'sublist':mylist})
 
 @login_required
 def add_post(request):
@@ -56,7 +70,7 @@ def add_post(request):
         post = Post()
         post.user = request.user
         post.text = request.POST['text']
-        post.published_date = timezone.now()
+        post.published_date = timezone.now()              
         if check_if_CA_secretary(request.user):
             post.category = 'CA'
         elif check_if_class_representative(request.user):
@@ -70,16 +84,32 @@ def add_post(request):
         post.save()
         return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
-    if request.FILES['postImage'] and request.method == "POST":
-        post = Post()
-        post.user = request.user
-        post.text = request.POST['text']
-        post.published_date = timezone.now()
-        myfile = request.FILES['postImage']
-        fs = FileSystemStorage()
-        filename = fs.save(myfile.name, myfile)
-        post.save()
-    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+def add_assign_link(request):
+     if request.method == "POST":
+         a = request.POST['hiddentext']
+         subject = Subject.objects.filter(subjectid=a)
+         for sub in subject:
+             sub.assignments = request.POST['aslink']
+             sub.save()    
+         return HttpResponseRedirect(request.META.get('HTTP_REFERER'))       
+
+def add_notes_link(request):
+     if request.method == "POST":
+         a = request.POST['nthiddentext']
+         subject = Subject.objects.filter(subjectid=a)
+         for sub in subject:
+             sub.notes = request.POST['ntlink']
+             sub.save()    
+         return HttpResponseRedirect(request.META.get('HTTP_REFERER'))       
+
+def add_prev_link(request):
+     if request.method == "POST":
+         a = request.POST['prhiddentext']
+         subject = Subject.objects.filter(subjectid=a)
+         for sub in subject:
+             sub.prevpapers = request.POST['prlink']
+             sub.save()    
+         return HttpResponseRedirect(request.META.get('HTTP_REFERER'))       
 
 def search_posts(request):
     if request.method == "POST":
@@ -133,3 +163,5 @@ def sports_posts(request):
     except EmptyPage:
         posts = paginator.page(paginator.num_pages)
     return render(request, 'feed/sports.html', {'posts': posts})
+
+
