@@ -32,34 +32,15 @@ class Post(models.Model):
         return self.text
 
 
-
-class Signup(models.Model):
-    username= models.TextField()
-    emailid= models.TextField()
-    category= models.TextField()
-    subjects= models.TextField()
-    password= models.TextField()
-    
-    def __str__(self):
-        return self.username
-
+class Semester(models.Model):
+    sno = models.IntegerField()
+    subjects= models.ForeignKey('Subject', on_delete=models.CASCADE)
 
 class Subject(models.Model):
     subjectid = models.TextField()
     assignments = models.TextField()
     notes = models.TextField()
     prevpapers= models.TextField()
-    cr=models.BooleanField(default=False)
 
     def __str__(self):
         return self.subjectid
-
-class timetable(models.Model):
-    date = models.TextField()
-    subjectid = models.TextField()
-    startTime = models.TimeField()
-    endTime = models.TimeField()
-    classType = models.TextField()
-
-    def __str__(self):
-        return self.subjectid            

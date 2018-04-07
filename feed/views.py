@@ -47,34 +47,7 @@ def feed(request):
         posts = paginator.page(1)
     except EmptyPage:
         posts = paginator.page(paginator.num_pages)
-   
-    obj = Signup.objects.get(username=request.user)
-    
-    objsub = obj.subjects.split(',',100)
-    print(objsub)
-
-    mylist = list()
-    for x in objsub:
-        y = Subject.objects.get(subjectid=x)
-        if obj.category == 'cr':
-            y.cr = True
-        else:
-            y.cr = False 
-        mylist.append(y)
-    return render(request, 'feed/feed.html', {'posts':posts,'sublist':mylist})
-
-def show_timetable(request):
-    if request.method == "POST":
-         d = request.POST['userdate']
-         obj = Signup.objects.get(username=request.user)
-         objsub = obj.subjects.split(',',100)
-         mylist1 = list()
-         for x in objsub:
-            y = timetable.objects.get(subjectid=x,date=d)
-            mylist1.append(y)
-
-    sorted(mylist1, key=lambda s: s.startTime)
-    return render(request, 'feed/feed.html', {'ttable':mylist1})
+    return render(request, 'feed/feed.html', {'posts':posts})
             
 
 
@@ -98,71 +71,6 @@ def add_post(request):
         post.save()
         return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
-
-def add_time_table(request):
-     if request.method == "POST":
-        d = request.POST['hiddendate']
-        print(d)
-        sid = request.POST['tthiddentext']
-        ttf = timetable.objects.filter(date=d,subjectid=sid) 
-        if not ttf:
-            tt= timetable()
-        else:    
-            tt = timetable.objects.get(date=d,subjectid=sid)
-        
-        
-        tt.subjectid=sid
-        tt.date=d
-        tt.startTime= request.POST['starttime']
-        tt.endTime = request.POST['endtime']
-        tt.classType=''
-        a= request.POST['cl']
-
-        if a!='slot':
-            tt.classType = tt.classType + a
-
-        a=request.POST['exam']
-
-        if a!='Noexam':
-            tt.classType = tt.classType + a
-
-        a=request.POST['Other']
-
-        if a:
-            tt.classType = tt.classType + a
-        
-        tt.save()
-        return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
-def add_assign_link(request):
-     if request.method == "POST":
-         a = request.POST['hiddentext']
-         subject = Subject.objects.filter(subjectid=a)
-         for sub in subject:
-             sub.assignments = request.POST['aslink']
-             sub.save()    
-         return HttpResponseRedirect(request.META.get('HTTP_REFERER'))       
-
-def add_notes_link(request):
-     if request.method == "POST":
-         a = request.POST['nthiddentext']
-         subject = Subject.objects.filter(subjectid=a)
-         for sub in subject:
-             sub.notes = request.POST['ntlink']
-             sub.save()    
-         return HttpResponseRedirect(request.META.get('HTTP_REFERER'))       
-
-def add_prev_link(request):
-     if request.method == "POST":
-         a = request.POST['prhiddentext']
-         print(a)
-         subject = Subject.objects.filter(subjectid=a)
-         for sub in subject:
-             sub.prevpapers = request.POST['prlink']
-             sub.save()    
-         return HttpResponseRedirect(request.META.get('HTTP_REFERER')) 
-
-
-              
 
 def search_posts(request):
     if request.method == "POST":
