@@ -139,3 +139,12 @@ def sports_posts(request):
     except EmptyPage:
         posts = paginator.page(paginator.num_pages)
     return render(request, 'feed/sports.html', {'posts': posts})
+
+def add_material(request):
+    if request.method == "POST":
+        course_material = CourseMaterial()
+        course_material.course = request.POST['course']
+        course_material.category = request.POST['category']
+        course_material.file = request.FILES['file']
+        course_material.save()
+        return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
