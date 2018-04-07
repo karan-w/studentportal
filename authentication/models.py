@@ -28,7 +28,7 @@ class Student(models.Model):
         ('4th', '4th'),
     )
 
-    user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True, related_name='profile')
+    user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True, related_name='student')
 
     phone_number = models.CharField(max_length=20, blank=True, null=True)
 
@@ -39,3 +39,25 @@ class Student(models.Model):
 
     def __str__(self):
         return (self.user.username + "_" + self.regNum)
+
+
+class Faculty(models.Model):
+    branch_choices = (
+        ('---', '---'),
+        ('CSE', 'Computer Science & Engineering'),
+        ('ECE', 'Electronics and Communication Engineering'),
+        ('MECH', 'Mechanical Engineering'),
+        ('MME', 'Metallurgy Engineering'),
+        ('CHE', 'Chemical Engineering'),
+        ('CIVIL', 'Civil Engineering'),
+        ('EEE', 'Electrical and Electronics Engineering'),
+        ('BIO', 'Biotechnology'),
+    )
+
+    user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True, related_name='faculty')
+    phone_number = models.CharField(max_length=20, blank=True, null=True)
+    department = models.CharField(max_length=10, choices=branch_choices, blank=True, null=True)
+    # teaching = models.ForeignKey
+
+    def __str__(self):
+        return (self.user.first_name + "_" + self.user.last_name)
