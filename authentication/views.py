@@ -4,6 +4,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from feed.models import *
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 
@@ -51,3 +52,22 @@ def signin(request):
 def signout(request):
     logout(request)
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
+
+@login_required
+def change_password(request):
+    if request.method == 'GET':
+        return render(request, 'authentication/change_pass.html', {})
+    else:
+        old_password = request.POST['old_password']
+        new_password = request.POST['new_password']
+
+        user = User.objects.get(username=request.user.username)
+        if user.check_password(old_password):
+            user.set_password(new_password)
+            user.save()
+            logout(request)
+            return redirect('/')
+        else:
+            error = "Existing password is incorrect."
+            return render(request, 'authentication/change_pass.html', {'error': error})
