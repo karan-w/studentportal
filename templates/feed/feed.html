@@ -1,7 +1,9 @@
 {% extends 'base.html' %}
 {% load staticfiles %}
 
+
 {% block content %}
+
     <div class="modal fade" id="modal-progress" data-backdrop="static" data-keyboard="false">
       <div class="modal-dialog">
         <div class="modal-content">
@@ -128,9 +130,68 @@
             <div class="card-body">
             </div>
           </div>
+            <!--<div id="demo" class="carousel slide" data-ride="carousel">-->
+
+  <!--&lt;!&ndash; Indicators &ndash;&gt;-->
+  <!--<ul class="carousel-indicators">-->
+      <!--{% if n > 1 %}-->
+        <!--{% for i in n %}-->
+        <!--<li data-target="#demo" data-slide-to="{{ i }}" class="active"></li>-->
+          <!--{% endfor %}-->
+      <!--{% endif %}-->
+  <!--</ul>-->
+
+  <!--&lt;!&ndash; The slideshow &ndash;&gt;-->
+  <!--<div class="carousel-inner">-->
+      <!--{% for question in questions %}-->
+    <!--<div class="carousel-item active">-->
+        <!--<h3>{{ question.question_text }}</h3>-->
+        <!--{% for choice in choices %}-->
+            <!--&lt;!&ndash;<p>{{ choice.question }}</p>&ndash;&gt;-->
+            <!--&lt;!&ndash;<p>{{ question.pk }}</p>&ndash;&gt;-->
+            <!--{% if choice.question == question %}-->
+        <!--<div class="radio">-->
+            <!--<label><input type="radio" name="optradio">{{ choice.choice_text }}</label>-->
+        <!--</div>-->
+            <!--{% endif %}-->
+        <!--{% endfor %}-->
+    <!--</div>-->
+        <!--<button type="button" class="btn btn-primary" onclick="alert('Your response has been recorded.')">Submit</button>-->
+    <!--</div>-->
+
+      <!--{% endfor %}-->
+  <!--</div>-->
+
+  <!--&lt;!&ndash; Left and right controls &ndash;&gt;-->
+  <!--<a class="carousel-control-prev" href="#demo" data-slide="prev">-->
+    <!--<span class="carousel-control-prev-icon"></span>-->
+  <!--</a>-->
+  <!--<a class="carousel-control-next" href="#demo" data-slide="next">-->
+    <!--<span class="carousel-control-next-icon"></span>-->
+  <!--</a>-->
+            <!---->
+            <div class="container beauty">
+    <div id="carouselContent" class="carousel slide" data-ride="carousel">
+        <div class="carousel-inner" role="listbox">
+            {% for question in questions %}
+            <div class="carousel-item active text-center p-5">
+                 <div class="container">
+                 <h3>{{ question.question_text }}</h3>
+                     {% for choice in choices %}
+                        {% if choice.question == question %}
+                  <div class="radio">
+                  <label><input type="radio" name="option" value="{{ choice.pk }}">{{ choice.choice_text }}</label>
+                  </div>
+                        {% endif %}
+                     {% endfor %}
+                   <!--<button type="button" class="btn btn-primary"  href="">Submit</button>-->
+                 </div>
+            </div>
+            {% endfor %}
         </div>
-
-
+    </div>
+    </div>
+        </div>
 
       </div>
       <!-- /.row -->

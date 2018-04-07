@@ -9,6 +9,7 @@ from django.core.files.storage import FileSystemStorage
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.views.generic.edit import FormView
 from django.http import JsonResponse
+from polls.models import Question
 
 
 # href="/media/{{ i.url }}"
@@ -41,6 +42,17 @@ def check_if_class_representative(user):
 
 @login_required
 def feed(request):
+    questions = Question.objects.order_by('-pub_date')[:5]
+    choices = []
+    choices_list = []
+
+    for question in questions:
+        choices = question.choices.all()
+        for choice in choices:
+            choices_list.append(choice)
+
+    print(choices_list)
+
     posts_list = Post.objects.all().order_by('published_date')[:50]
     images = []
     for post in posts_list:
@@ -56,8 +68,7 @@ def feed(request):
     except EmptyPage:
         posts = paginator.page(paginator.num_pages)
 
-
-    return render(request, 'feed/feed.html', {'posts':posts, 'images': images})
+    return render(request, 'feed/feed.html', {'posts': posts, 'images': images, 'questions': questions, 'n' : range(5), 'choices':choices_list })
 
 
 @login_required

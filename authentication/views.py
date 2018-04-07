@@ -44,17 +44,17 @@ def signout(request):
 @login_required
 def change_password(request):
     if request.method == 'GET':
-        return render(request, 'authentication/change_pass.html', {})
+        return render(request, 'authentication/change_password.html', {})
     else:
         old_password = request.POST['old_password']
         new_password = request.POST['new_password']
-
+        print(old_password)
+        print(new_password)
         user = User.objects.get(username=request.user.username)
         if user.check_password(old_password):
             user.set_password(new_password)
             user.save()
-            logout(request)
             return redirect('/')
         else:
             error = "Existing password is incorrect."
-            return render(request, 'authentication/change_pass.html', {'error': error})
+            return render(request, 'authentication/change_password.html', {'error': error})

@@ -1,13 +1,13 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <title>Polling</title>
-  <meta charset="utf-8">
- <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<!--<!DOCTYPE html>-->
+<!--<html lang="en">-->
+<!--<head>-->
+  <!--<title>Polling</title>-->
+  <!--<meta charset="utf-8">-->
+ <!--<meta name="viewport" content="width=device-width, initial-scale=1">-->
+  <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">-->
+  <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>-->
+  <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>-->
+  <!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>-->
   <style>
   .beauty {
     background-color: #ddd;
@@ -19,8 +19,11 @@
     display:block;
 }
   </style>
-</head>
-<body>
+<!--</head>-->
+<!--<body>-->
+{% extends 'base.html' %}
+
+{% block content %}
 <div class="container beauty">
     <div id="carouselContent" class="carousel slide" data-ride="carousel">
         <div class="carousel-inner" role="listbox">
@@ -39,22 +42,6 @@
                    <button type="button" class="btn btn-primary" onclick="alert('Your response has been recorded.')">Submit</button>
                  </div>
             </div>
-
-            <div class="carousel-item text-center p-5">
-                <div class="container">
-                 <h3>Question2? Choose:</h3>    
-                  <div class="radio">
-                  <label><input type="radio" name="optradio">Option 1</label>
-                  </div>
-                  <div class="radio">
-                   <label><input type="radio" name="optradio">Option 2</label>
-                  </div>
-                   <div class="radio">
-                  <label><input type="radio" name="optradio">Option 3</label>
-                  </div>
-                   <button type="button" class="btn btn-primary" onclick="alert('Your response has been recorded.')">Submit</button>
-                 </div>
-            </div>
         </div>
         <a class="carousel-control-prev" href="#carouselContent" role="button" data-slide="prev">
             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -66,5 +53,9 @@
         </a>
     </div>
 </div>
-</body>
-</html>
+
+
+{% endblock  %}
+<!--</body>-->
+
+<!--</html>-->
