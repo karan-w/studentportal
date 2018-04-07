@@ -39,7 +39,7 @@ class Student(models.Model):
     section = models.CharField(max_length=2, blank=True, null=True)
 
     def __str__(self):
-        return (self.user.username + "_" + self.regNum)
+        return (self.user.username + "_" + self.registration_number)
 
 
 class Faculty(models.Model):
