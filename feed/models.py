@@ -41,7 +41,7 @@ class Photo(models.Model):
 
 class Semester(models.Model):
     sno = models.IntegerField()
-    subjects = models.ForeignKey('Subject', on_delete=models.CASCADE)
+    subjects = models.ForeignKey('Course', on_delete=models.CASCADE)
 
 class Course(models.Model):
     name = models.CharField(max_length=20)

@@ -148,3 +148,17 @@ def add_material(request):
         course_material.file = request.FILES['file']
         course_material.save()
         return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
+def view_assignments(request, course_id):
+    assignments = CourseMaterial.objects.filter(course__pk=course_id, category='AS')
+    return render(request, 'feed/sports.html', {'assignments': assignments})
+
+def view_notes(request, course_id):
+    notes = CourseMaterial.objects.filter(course__pk=course_id, category='NO')
+    print(len(notes))
+    return render(request, 'feed/sports.html', {'notes': notes})
+
+def view_previous_papers(request, course_id):
+    previous_papers = CourseMaterial.objects.filter(course__pk=course_id, category='PP')
+    print(len(previous_papers))
+    return render(request, 'feed/sports.html', {'previous_papers': previous_papers})
