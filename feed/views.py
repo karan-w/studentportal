@@ -2,7 +2,7 @@ from __future__ import unicode_literals
 
 from json.decoder import PosInf
 
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, user_passes_test
 from .models import *
 from django.shortcuts import render, get_object_or_404, redirect, HttpResponseRedirect
 from django.core.files.storage import FileSystemStorage
@@ -87,6 +87,7 @@ def add_post(request):
             p.save()
         return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
+@login_required
 def search_posts(request):
     if request.method == "POST":
         posts_list = Post.objects.filter(text__iexact=request.POST['search_text'])[:50]
@@ -101,6 +102,7 @@ def search_posts(request):
             posts = paginator.page(paginator.num_pages)
         return render(request, 'feed/searchresults.html', {'posts': posts})
 
+@login_required
 def academics_posts(request):
     posts_list = Post.objects.filter(category__contains='AC')[:50]
     paginator = Paginator(posts_list, 10)
@@ -114,6 +116,7 @@ def academics_posts(request):
         posts = paginator.page(paginator.num_pages)
     return render(request, 'feed/academics.html', {'posts': posts})
 
+@login_required
 def clubs_and_association_posts(request):
     posts_list = Post.objects.filter(category__contains='CA')[:50]
     paginator = Paginator(posts_list, 10)
@@ -127,6 +130,7 @@ def clubs_and_association_posts(request):
         posts = paginator.page(paginator.num_pages)
     return render(request, 'feed/clubsassociations.html', {'posts': posts})
 
+@login_required
 def sports_posts(request):
     posts_list = Post.objects.filter(category__contains='SP')[:50]
     paginator = Paginator(posts_list, 10)
@@ -140,6 +144,7 @@ def sports_posts(request):
         posts = paginator.page(paginator.num_pages)
     return render(request, 'feed/sports.html', {'posts': posts})
 
+@user_passes_test(check_if_faculty)
 def add_material(request):
     if request.method == "POST":
         course_material = CourseMaterial()
@@ -149,16 +154,17 @@ def add_material(request):
         course_material.save()
         return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
+@login_required
 def view_assignments(request, course_id):
     assignments = CourseMaterial.objects.filter(course__pk=course_id, category='AS')
     return render(request, 'feed/sports.html', {'assignments': assignments})
 
+@login_required
 def view_notes(request, course_id):
     notes = CourseMaterial.objects.filter(course__pk=course_id, category='NO')
-    print(len(notes))
     return render(request, 'feed/sports.html', {'notes': notes})
 
+@login_required
 def view_previous_papers(request, course_id):
     previous_papers = CourseMaterial.objects.filter(course__pk=course_id, category='PP')
-    print(len(previous_papers))
     return render(request, 'feed/sports.html', {'previous_papers': previous_papers})

@@ -35,11 +35,11 @@ def signin(request):
                 posts = paginator.page(paginator.num_pages)
                     
             return render(request, 'feed/feed.html', {'posts':posts})
-  
+
+@login_required
 def signout(request):
     logout(request)
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
-
 
 @login_required
 def change_password(request):
