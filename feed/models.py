@@ -66,18 +66,20 @@ class CourseMaterial(models.Model):
     file = models.FileField(upload_to=get_material_file_path)
 
 class Timetable(models.Model):
-      years = (
+    date = models.DateField()
+        
+    years = (
         ('1st', '1st'),
         ('2nd', '2nd'),
         ('3rd', '3rd'),
         ('4th', '4th'),
-    )
-    date = models.DateField()
+      )
+      
     year = models.CharField(max_length=20, choices=years, blank=True, null=True)
     section = models.CharField(max_length=2, blank=True, null=True)
     course= models.ForeignKey('Course', on_delete=models.CASCADE)
     
-    def __str__(self)
-        return self.course
+    def __str__(self):
+     return self.course
 
 
