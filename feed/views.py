@@ -8,9 +8,8 @@ from django.shortcuts import render, get_object_or_404, redirect, HttpResponseRe
 from django.core.files.storage import FileSystemStorage
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.views.generic.edit import FormView
-from .forms import *
 from django.http import JsonResponse
-from .forms import *
+
 
 
 def image_directory_path(instance, filename):
@@ -43,7 +42,12 @@ def check_if_class_representative(user):
 
 @login_required
 def feed(request):
-    posts_list = Post.objects.all().order_by('-published_date')[:50]
+    posts_list = Post.objects.all().order_by('published_date')[:50]
+    images = []
+    for post in posts_list:
+        images.append(post.photo.all())
+
+    print(len(images))
     paginator = Paginator(posts_list, 10)
     page = request.GET.get('page', 1)
     try:
@@ -53,15 +57,15 @@ def feed(request):
     except EmptyPage:
         posts = paginator.page(paginator.num_pages)
 
-    form = PostForm()
-    return render(request, 'feed/feed.html', {'posts':posts})
-            
+
+    return render(request, 'feed/feed.html', {'posts':posts, 'images': images})
 
 
 @login_required
 def add_post(request):
     if request.method == "POST":
         post = Post()
+        post.published_date = timezone.now()
         post.text = request.POST['text']
         post.user = request.user
         if check_if_CA_secretary(request.user):
@@ -135,19 +139,3 @@ def sports_posts(request):
     except EmptyPage:
         posts = paginator.page(paginator.num_pages)
     return render(request, 'feed/sports.html', {'posts': posts})
-
-class AddPostView(FormView):
-    def get(self, request):
-        photos_list = Photo.objects.all()
-        return HttpResponseRedirect('/')
-
-    def post(self, request):
-        print(request.POST['images'])
-        print(request.FILES)
-        form = PostForm(self.request.POST, self.request.FILES)
-        if form.is_valid():
-            photo = form.save()
-            data = {'is_valid': True, 'name': photo.file.name, 'url': photo.file.url}
-        else:
-            data = {'is_valid': False}
-        return JsonResponse(data)

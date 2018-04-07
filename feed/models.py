@@ -3,7 +3,7 @@ from django.utils import timezone
 from django.contrib.auth.models import User
 
 def get_post_image_path(instance,filename):
-	return 'posts/{0}/{1}'.format(instance.post.user.name,filename)
+	return 'posts/{0}/{1}'.format(instance.post.user.username,filename)
 
 class Post(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -31,7 +31,7 @@ class Post(models.Model):
         return self.text
 
 class Photo(models.Model):
-    post = models.ForeignKey(Post, default=None, on_delete=models.CASCADE)
+    post = models.ForeignKey(Post, default=None, on_delete=models.CASCADE, related_name='photo')
     file = models.FileField(upload_to=get_post_image_path)
     uploaded_at = models.DateTimeField(auto_now_add=True)
 
