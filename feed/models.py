@@ -52,4 +52,14 @@ class Subject(models.Model):
     cr=models.BooleanField(default=False)
 
     def __str__(self):
-        return self.subjectid        
+        return self.subjectid
+
+class timetable(models.Model):
+    date = models.TextField()
+    subjectid = models.TextField()
+    startTime = models.TimeField()
+    endTime = models.TimeField()
+    classType = models.TextField()
+
+    def __str__(self):
+        return self.subjectid            

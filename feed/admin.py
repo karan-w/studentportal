@@ -4,4 +4,5 @@ from .models import *
 admin.site.register(Post)
 admin.site.register(Signup)
 admin.site.register(Subject)
+admin.site.register(timetable)
 # Register your models here.
