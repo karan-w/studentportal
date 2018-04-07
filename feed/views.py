@@ -5,6 +5,8 @@ import datetime
 from django.shortcuts import render, get_object_or_404, redirect, HttpResponseRedirect
 from django.core.files.storage import FileSystemStorage
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.views.generic.edit import FormView
+from .forms import *
 
 
 # def image_directory_path(instance, filename):
@@ -58,6 +60,24 @@ def add_post(request):
         post.user = request.user
         post.text = request.POST['text']
         post.published_date = timezone.now()              
+        if check_if_CA_secretary(request.user):
+            post.category = 'CA'
+        elif check_if_class_representative(request.user):
+            post.category = 'CR'
+        elif check_if_faculty(request.user):
+            post.category = 'AC'
+        elif check_if_sports_secretary(request.user):
+            post.category = 'SP'
+        else:
+            post.category = 'GN'
+        post.save()
+        return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
+    if request.method == "POST" :
+        post = Post()
+        post.user = request.user
+        post.text = request.POST['text']
+        post.published_date = timezone.now()
         if check_if_CA_secretary(request.user):
             post.category = 'CA'
         elif check_if_class_representative(request.user):
@@ -125,4 +145,18 @@ def sports_posts(request):
         posts = paginator.page(paginator.num_pages)
     return render(request, 'feed/sports.html', {'posts': posts})
 
+class PostView(FormView):
+    form_class = PostForm
+    template_name = 'upload.html'  # Replace with your template.
+    success_url = '...'  # Replace with your URL or reverse().
 
+    def post(self, request, *args, **kwargs):
+        form_class = self.get_form_class()
+        form = self.get_form(form_class)
+        files = request.FILES.getlist('file_field')
+        if form.is_valid():
+            for f in files:
+                ...  # Do something with each file.
+            return self.form_valid(form)
+        else:
+            return self.form_invalid(form)

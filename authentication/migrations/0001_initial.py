@@ -15,6 +15,7 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
+<<<<<<< HEAD
             name='Faculty',
             fields=[
                 ('user', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, primary_key=True, related_name='faculty', serialize=False, to=settings.AUTH_USER_MODEL)),
@@ -26,6 +27,11 @@ class Migration(migrations.Migration):
             name='Student',
             fields=[
                 ('user', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, primary_key=True, related_name='student', serialize=False, to=settings.AUTH_USER_MODEL)),
+=======
+            name='Student',
+            fields=[
+                ('user', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, primary_key=True, related_name='profile', serialize=False, to=settings.AUTH_USER_MODEL)),
+>>>>>>> e9e5bc6e3cebb17a73817550d40ff1f0e33b883b
                 ('phone_number', models.CharField(blank=True, max_length=20, null=True)),
                 ('registration_number', models.CharField(blank=True, max_length=10, null=True)),
                 ('course', models.CharField(blank=True, choices=[('BTech', 'B.Tech'), ('MTech', 'M.Tech'), ('MCA', 'MCA'), ('MBA', 'MBA'), ('PHD', 'Phd')], max_length=10, null=True)),

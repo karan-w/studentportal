@@ -23,4 +23,7 @@ urlpatterns = [
     url(r'^', include('feed.urls', namespace='feed')),
     url(r'^authentication/', include('authentication.urls', namespace='authentication')),
     url(r'^polls/', include('polls.urls')),
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

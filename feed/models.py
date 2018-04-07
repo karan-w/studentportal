@@ -31,6 +31,11 @@ class Post(models.Model):
     def __str__(self):
         return self.text
 
+class Photo(models.Model):
+    post = models.ForeignKey(Post, default=None)
+    file = models.FileField(upload_to='photos/')
+    uploaded_at = models.DateTimeField(auto_now_add=True)
+
 
 class Semester(models.Model):
     sno = models.IntegerField()
