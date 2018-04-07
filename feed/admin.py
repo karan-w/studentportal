@@ -4,3 +4,4 @@ from .models import *
 admin.site.register(Post)
 admin.site.register(Subject)
 admin.site.register(Semester)
+admin.site.register(Photo)

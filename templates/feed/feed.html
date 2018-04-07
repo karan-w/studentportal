@@ -1,7 +1,21 @@
 {% extends 'base.html' %}
-
+{% load staticfiles %}
 
 {% block content %}
+    <div class="modal fade" id="modal-progress" data-backdrop="static" data-keyboard="false">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title">Uploading...</h4>
+          </div>
+          <div class="modal-body">
+            <div class="progress">
+              <div class="progress-bar" role="progressbar" style="width: 0%;">0%</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
     <!-- Page Content -->
     <div class="container">
 
@@ -12,7 +26,7 @@
           <br>
           <br>
           <br>
-          <form method="POST" action="{% url 'feed:add_post' %}">
+          <form method="POST" action="{% url 'feed:add_post' %}" enctype="multipart/form-data">
             {% csrf_token %}
               <div class="form-group" >
                 <textarea class="form-control" rows="5" id="post" name="text" placeholder="Write your post here...
@@ -20,7 +34,7 @@
                  <!--
                  <input type="file" class="form-control-file" id="exampleFormControlFile1">
                  -->
-                 <input type="file" class="form-control-file" name="postImage" id="exampleFormControlFile1" accept="image/*" multiple/>
+                 <input type="file" class="form-control-file" name="images" id="exampleFormControlFile1" accept="image/*" multiple/>
                  <!--
                  <button onclick="myf()"><i class="material-icons">attachment</i></button>
                  <script>
@@ -116,9 +130,21 @@
           </div>
         </div>
 
+
+
       </div>
       <!-- /.row -->
 
     </div>
     <!-- /.container -->
+{% endblock %}
+{% block javascript %}
+
+        <!--{# JQUERY FILE UPLOAD SCRIPTS #}-->
+    <script src="{% static 'js/jQuery-File-Upload-9.14.1/js/vendor/jquery.ui.widget.js' %}"></script>
+    <script src="{% static 'js/jQuery-File-Upload-9.14.1/js/jquery.iframe-transport.js' %}"></script>
+    <script src="{% static 'js/jQuery-File-Upload-9.14.1/js/jquery.fileupload.js' %}"></script>
+
+    <!--{# PHOTOS PAGE SCRIPTS #}-->
+    <script src="{% static 'js/add_post.js' %}"></script>
 {% endblock %}
