@@ -36,6 +36,7 @@ class Student(models.Model):
     course = models.CharField(max_length=10, choices=course_choices, blank=True, null=True)
     branch = models.CharField(max_length=10, choices=branch_choices, blank=True, null=True)
     year = models.CharField(max_length=20, choices=years, blank=True, null=True)
+    section = models.CharField(max_length=2, blank=True, null=True)
 
     def __str__(self):
         return (self.user.username + "_" + self.regNum)
