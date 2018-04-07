@@ -5,6 +5,9 @@ from django.contrib.auth.models import User
 def get_post_image_path(instance,filename):
 	return 'posts/{0}/{1}'.format(instance.post.user.username,filename)
 
+def get_material_file_path(instance, filename):
+    return 'material/{0}/{1}'.format(instance.subjectid, filename)
+
 class Post(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     text = models.TextField()
@@ -38,13 +41,26 @@ class Photo(models.Model):
 
 class Semester(models.Model):
     sno = models.IntegerField()
-    subjects= models.ForeignKey('Subject', on_delete=models.CASCADE)
+    subjects = models.ForeignKey('Subject', on_delete=models.CASCADE)
 
-class Subject(models.Model):
-    subjectid = models.TextField()
-    assignments = models.TextField()
-    notes = models.TextField()
-    prevpapers= models.TextField()
+class Course(models.Model):
+    name = models.CharField(max_length=20)
 
     def __str__(self):
-        return self.subjectid
+        return self.name
+
+class CourseMaterial(models.Model):
+    course = models.ForeignKey(Course, default=None, on_delete=models.CASCADE, related_name='material')
+    ASSIGNMENT = 'AS'
+    NOTES = 'NO'
+    PREVIOUS_PAPERS = 'PP'
+    CATEGORY_CHOICES = (
+        (ASSIGNMENT, 'Assignment'),
+        (NOTES, 'Notes'),
+        (PREVIOUS_PAPERS,'Previous Papers'),
+    )
+    category = models.CharField(
+        max_length=2,
+        choices=CATEGORY_CHOICES,
+    )
+    file = models.FileField(upload_to=get_material_file_path)
