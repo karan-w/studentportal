@@ -11,10 +11,9 @@ from django.views.generic.edit import FormView
 from django.http import JsonResponse
 
 
-
-def image_directory_path(instance, filename):
-    # file will be uploaded to MEDIA_ROOT/feed_<id>/<filename>
-    return 'feed_{0}/{1}'.format(instance.user.id, filename)
+# href="/media/{{ i.url }}"
+def get_post_image_path(instance,filename):
+	return 'posts/{0}/{1}'.format(instance.post.user.username,filename)
 
 
 def check_if_faculty(user):
@@ -84,6 +83,7 @@ def add_post(request):
             p = Photo()
             p.post = post
             p.file = photo
+            p.url = get_post_image_path()
             p.save()
         return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 

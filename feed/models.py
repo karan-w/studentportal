@@ -37,7 +37,7 @@ class Photo(models.Model):
     post = models.ForeignKey(Post, default=None, on_delete=models.CASCADE, related_name='photo')
     file = models.FileField(upload_to=get_post_image_path)
     uploaded_at = models.DateTimeField(auto_now_add=True)
-
+    url = models.CharField(max_length=100, default=None)
 
 class Semester(models.Model):
     sno = models.IntegerField()
