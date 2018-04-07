@@ -145,7 +145,7 @@ def sports_posts(request):
         posts = paginator.page(paginator.num_pages)
     return render(request, 'feed/sports.html', {'posts': posts})
 
-class PostView(FormView):
+class AddPostView(FormView):
     form_class = PostForm
     template_name = 'upload.html'  # Replace with your template.
     success_url = '...'  # Replace with your URL or reverse().

@@ -32,7 +32,7 @@ class Post(models.Model):
         return self.text
 
 class Photo(models.Model):
-    post = models.ForeignKey(Post, default=None)
+    post = models.ForeignKey(Post, default=None, on_delete=models.CASCADE)
     file = models.FileField(upload_to='photos/')
     uploaded_at = models.DateTimeField(auto_now_add=True)
 
