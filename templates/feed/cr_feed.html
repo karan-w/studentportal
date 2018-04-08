@@ -1,9 +1,7 @@
 {% extends 'base.html' %}
 {% load staticfiles %}
 
-
 {% block content %}
-
     <div class="modal fade" id="modal-progress" data-backdrop="static" data-keyboard="false">
       <div class="modal-dialog">
         <div class="modal-content">
@@ -72,23 +70,6 @@
                               </div>
                               {% endifequal %}
                               {% endfor %}
-                          </div>
-                      </div>
-                    
-                  </div>
-                  </div>
-            <div class="card-body">
-              <!--<h2 class="card-title">Post Title</h2>-->
-              <p class="card-text">{{ post.text }}</p>
-              <!--<a href="#" class="btn btn-primary">Read More &rarr;</a>-->
-            </div>
-            <div class="card-footer text-muted">
-              Posted on {{ post.published_date }} by
-              <a href="#">{{ post.user.first_name }} {{ post.user.last_name }}</a>
-            </div>
-          </div>
-
-          {% endfor %}
 
 
           <!-- Pagination -->
@@ -140,119 +121,80 @@
           <div class="card my-4">
             <h5 class="card-header">Academics</h5>
             <div class="card-body">
-            <!--
-                {% for subject in subjects %}
-                <div class="dropdown">
-                  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    {{ subject.subjectid }}
-                  </button>
-                  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    <a class="dropdown-item" href="subjects.html">Assignments</a>
-                    <a class="dropdown-item" href="subjects.html">Previous Papers</a>
-                    <a class="dropdown-item" href="subjects.html">Notes</a>
-                  </div>
-                </div>
-                {% endfor %}
-              -->
-              <a href="feed/subjects.html">files</a>
+
             </div>
           </div>
           <!-- Side Widget -->
           <div class="card my-5">
             <div class="card-header">
-            <h5>Timetable for {{tt.date}}:</h5> 
+            <h5>Timetable:</h5> 
           </div>
             <div class="card-body">
-                <ul class="list-group">
-                   {% if tt.course8_9 is not None %}
-                    <li class="list-group-item">8-9 :: {{tt.course8_9}}</li>
-                    {% endif %}
-                    {% if tt.course9_10 is not None %}
-                    <li class="list-group-item">9-10 :: {{tt.course9_10}}</li>
-                    {% endif %}
-                    {% if tt.course10_11 is not None %}
-                    <li class="list-group-item">10-11 :: {{tt.course10_11}}</li>
-                    {% endif %}
-                    {% if tt.course11_12 is not None%}
-                    <li class="list-group-item">11-12 :: {{tt.course11_12}}</li>
-                    {% endif %}
-                    {% if tt.course12_1 is not None %}
-                    <li class="list-group-item">12-1 :: {{tt.course12_1}}</li>
-                    {% endif %}
-                    {% if tt.course2_3 is not None %}
-                    <li class="list-group-item">2-3 :: {{tt.course2_3}}</li>
-                    {% endif %}
-                    {% if tt.course3_4 is not None %}
-                    <li class="list-group-item">3-4 :: {{tt.course3_4}}</li>  
-                    {% endif %}
-                    {% if tt.course4_5 is not None %}                  
-                    <li class="list-group-item">4-5 :: {{tt.course4_5}}</li>
-                    {% endif %}
-                  </ul>
+                    <div class="form-group">
+                      <form method="POST" action="{% url 'feed:update_timetable' %}">
+                        {% csrf_token %}
+                            <label for="exampleFormControlSelect1">8-9</label>
+                            <select class="form-control" id="exampleFormControlSelect1" name="8-9">
+                                {% for cou in course %}
+                                <option>{{cou.name}}</option>
+                                {% endfor %}
+                              </select>
+                              <label for="exampleFormControlSelect1">9-10</label>
+                            <select class="form-control" id="exampleFormControlSelect1"name="9-10">
+                                {% for cou in course %}
+                                <option>{{cou.name}}</option>
+                                {% endfor %}
+                              </select>
+                              <label for="exampleFormControlSelect1">10-11</label>
+                              <select class="form-control" id="exampleFormControlSelect1"name="10-11">
+                                  {% for cou in course %}
+                                  <option>{{cou.name}}</option>
+                                  {% endfor %}
+                                </select>
+                                <label for="exampleFormControlSelect1">11-12</label>
+                                <select class="form-control" id="exampleFormControlSelect1"name="11-12">
+                                    {% for cou in course %}
+                                    <option>{{cou.name}}</option>
+                                    {% endfor %}
+                                  </select>
+                                  <label for="exampleFormControlSelect1">12-1</label>
+                                  <select class="form-control" id="exampleFormControlSelect1"name="12-1">
+                                      {% for cou in course %}
+                                      <option>{{cou.name}}</option>
+                                      {% endfor %}
+                                    </select>
+                                    <label for="exampleFormControlSelect1">2-3</label>
+                                    <select class="form-control" id="exampleFormControlSelect1"name="2-3">
+                                        {% for cou in course %}
+                                        <option>{{cou.name}}</option>
+                                        {% endfor %}
+                                      </select>
+                                      <label for="exampleFormControlSelect1">3-4</label>
+                                    <select class="form-control" id="exampleFormControlSelect1"name="3-4">
+                                        {% for cou in course %}
+                                        <option>{{cou.name}}</option>
+                                        {% endfor %}
+                                      </select>
+                                      <label for="exampleFormControlSelect1">4-5</label>
+                                    <select class="form-control" id="exampleFormControlSelect1"name="4-5">
+                                        {% for cou in course %}
+                                        <option>{{cou.name}}</option>
+                                        {% endfor %}
+                                      </select>
+                           
+                                     
+                            </div>
+                            <form action="{% url 'feed:update_timetable' %}">
+                                {% csrf_token %}
+                              Date:
+                              <input type="date" name="timetabledate">
+                              <input type="submit" class="btn btn-primary" value="Update">
+                            </form>
             </div>
           </div>
-            <!--<div id="demo" class="carousel slide" data-ride="carousel">-->
-
-  <!--&lt;!&ndash; Indicators &ndash;&gt;-->
-  <!--<ul class="carousel-indicators">-->
-      <!--{% if n > 1 %}-->
-        <!--{% for i in n %}-->
-        <!--<li data-target="#demo" data-slide-to="{{ i }}" class="active"></li>-->
-          <!--{% endfor %}-->
-      <!--{% endif %}-->
-  <!--</ul>-->
-
-  <!--&lt;!&ndash; The slideshow &ndash;&gt;-->
-  <!--<div class="carousel-inner">-->
-      <!--{% for question in questions %}-->
-    <!--<div class="carousel-item active">-->
-        <!--<h3>{{ question.question_text }}</h3>-->
-        <!--{% for choice in choices %}-->
-            <!--&lt;!&ndash;<p>{{ choice.question }}</p>&ndash;&gt;-->
-            <!--&lt;!&ndash;<p>{{ question.pk }}</p>&ndash;&gt;-->
-            <!--{% if choice.question == question %}-->
-        <!--<div class="radio">-->
-            <!--<label><input type="radio" name="optradio">{{ choice.choice_text }}</label>-->
-        <!--</div>-->
-            <!--{% endif %}-->
-        <!--{% endfor %}-->
-    <!--</div>-->
-        <!--<button type="button" class="btn btn-primary" onclick="alert('Your response has been recorded.')">Submit</button>-->
-    <!--</div>-->
-
-      <!--{% endfor %}-->
-  <!--</div>-->
-
-  <!--&lt;!&ndash; Left and right controls &ndash;&gt;-->
-  <!--<a class="carousel-control-prev" href="#demo" data-slide="prev">-->
-    <!--<span class="carousel-control-prev-icon"></span>-->
-  <!--</a>-->
-  <!--<a class="carousel-control-next" href="#demo" data-slide="next">-->
-    <!--<span class="carousel-control-next-icon"></span>-->
-  <!--</a>-->
-            <!---->
-            <div class="container beauty">
-    <div id="carouselContent" class="carousel slide" data-ride="carousel">
-        <div class="carousel-inner" role="listbox">
-            {% for question in questions %}
-            <div class="carousel-item active text-center p-5">
-                 <div class="container">
-                 <h3>{{ question.question_text }}</h3>
-                     {% for choice in choices %}
-                        {% if choice.question == question %}
-                  <div class="radio">
-                  <label><input type="radio" name="option" value="{{ choice.pk }}">{{ choice.choice_text }}</label>
-                  </div>
-                        {% endif %}
-                     {% endfor %}
-                   <!--<button type="button" class="btn btn-primary"  href="">Submit</button>-->
-                 </div>
-            </div>
-            {% endfor %}
         </div>
-    </div>
-    </div>
-        </div>
+
+
 
       </div>
       <!-- /.row -->

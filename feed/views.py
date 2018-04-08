@@ -1,9 +1,10 @@
 from __future__ import unicode_literals
 
 from json.decoder import PosInf
-
+import datetime
 from django.contrib.auth.decorators import login_required, user_passes_test
 from .models import *
+from authentication.models import *
 from django.shortcuts import render, get_object_or_404, redirect, HttpResponseRedirect
 from django.core.files.storage import FileSystemStorage
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
@@ -53,10 +54,12 @@ def feed(request):
 
     print(choices_list)
 
-    posts_list = Post.objects.all().order_by('published_date')[:50]
+    posts_list = Post.objects.all().order_by('-published_date')[:50]
     images = []
-    for post in posts_list:
-        images.append(post.photo.all())
+    for postobj in posts_list:
+        i = Photo.objects.filter(post=postobj)
+        for j in i:
+            images.append(j)
 
     print(len(images))
     paginator = Paginator(posts_list, 10)
@@ -68,8 +71,42 @@ def feed(request):
     except EmptyPage:
         posts = paginator.page(paginator.num_pages)
 
-    return render(request, 'feed/feed.html', {'posts': posts, 'images': images, 'questions': questions, 'n' : range(5), 'choices':choices_list })
+    
+    student=Student.objects.get(user=request.user)
+    print(student)
+    course = Course.objects.all()
+    if check_if_class_representative(request.user):
+        print("cr")
+        return render(request, 'feed/cr_feed.html', {'posts':posts, 'images': images, 'course':course})
+    else:
+        print("not cr")
+        tt = Timetable.objects.get(section=student.section, year=student.year, semester=student.semester)
+    return render(request, 'feed/feed.html', {'posts': posts, 'images': images, 'questions': questions, 'n' : range(5), 'choices':choices_list, 'tt':tt})
 
+def update_timetable(request):
+    if request.method=='POST':
+        student = Student.objects.get(user=request.user)
+        check = Timetable.objects.filter(section=student.section, year=student.year, semester=student.semester)
+        print(check)
+        if check.count()!=0:
+         tt = Timetable.objects.get(section=student.section, year=student.year, semester=student.semester)
+        else:
+         tt= Timetable()
+        tt.course8_9=request.POST['8-9']
+        tt.course9_10=request.POST['9-10']
+        tt.course10_11=request.POST['10-11']
+        tt.course11_12=request.POST['11-12']
+        tt.course12_1=request.POST['12-1']
+        tt.course2_3=request.POST['2-3']
+        tt.course3_4=request.POST['3-4']
+        tt.course4_5=request.POST['4-5']
+        #tt.date = request.POST['ttdate']
+        tt.date=request.POST['timetabledate']
+        tt.section = student.section
+        tt.year = student.year
+        tt.semester = student.semester
+        tt.save()
+        return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 @login_required
 def add_post(request):
@@ -94,7 +131,7 @@ def add_post(request):
             p = Photo()
             p.post = post
             p.file = photo
-            p.url = get_post_image_path()
+            p.url = get_post_image_path(p, p.file)
             p.save()
         return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
@@ -164,6 +201,9 @@ def add_material(request):
         course_material.file = request.FILES['file']
         course_material.save()
         return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
+def show_material(request):
+    return render(request, 'feed/subjects.html')
 
 @login_required
 def view_assignments(request, course_id):

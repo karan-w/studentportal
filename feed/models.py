@@ -77,9 +77,17 @@ class Timetable(models.Model):
       
     year = models.CharField(max_length=20, choices=years, blank=True, null=True)
     section = models.CharField(max_length=2, blank=True, null=True)
-    course= models.ForeignKey('Course', on_delete=models.CASCADE)
-    
+    course8_9= models.CharField(max_length= 10, blank=True, null=True)
+    course9_10= models.CharField(max_length= 10, blank=True, null=True)
+    course10_11= models.CharField(max_length= 10, blank=True, null=True)
+    course11_12= models.CharField(max_length= 10, blank=True, null=True)
+    course12_1= models.CharField(max_length= 10, blank=True, null=True)
+    course2_3= models.CharField(max_length= 10, blank=True, null=True)
+    course3_4= models.CharField(max_length= 10, blank=True, null=True)
+    course4_5= models.CharField(max_length= 10, blank=True, null=True)
+    semester = models.IntegerField(null=True)
+      
     def __str__(self):
-     return self.course
+     return self.year + ' '+self.section
 
 
