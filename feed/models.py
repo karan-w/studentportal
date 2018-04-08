@@ -6,7 +6,7 @@ def get_post_image_path(instance,filename):
 	return 'posts/{0}/{1}'.format(instance.post.user.username,filename)
 
 def get_material_file_path(instance, filename):
-    return 'material/{0}/{1}'.format(instance.subjectid, filename)
+    return 'material/{0}/{1}'.format(instance.course, filename)
 
 class Post(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -39,9 +39,6 @@ class Photo(models.Model):
     uploaded_at = models.DateTimeField(auto_now_add=True)
     url = models.CharField(max_length=100, default=None)
 
-class Semester(models.Model):
-    sno = models.IntegerField()
-
 class Course(models.Model):
     name = models.CharField(max_length=20)
     year = models.IntegerField()
@@ -70,6 +67,8 @@ class Course(models.Model):
         return self.name
 
 class CourseMaterial(models.Model):
+    name = models.CharField(max_length=50, default=None)
+    description = models.CharField(max_length=200, default=None)
     course = models.ForeignKey(Course, default=None, on_delete=models.CASCADE, related_name='material')
     ASSIGNMENT = 'AS'
     NOTES = 'NO'
