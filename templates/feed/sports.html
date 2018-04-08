@@ -14,16 +14,39 @@
           {% for post in posts %}
           <!-- Blog Post -->
           <div class="card mb-4">
-            {% if post.image %}
+            <!-- {% if post.image %}
             <img class="card-img-top" src="{{ post.image.url }}" alt="Card image cap">
-            {% endif %}
+            {% endif %} -->
+            <div class="container">
+                <br>
+                  <div class="container gallery-container">
+                        <div class="tz-gallery">
+                            <div class="row mb-3">
+                                {% for i in images %}
+
+                              {% ifequal i.post_id post.id %}
+
+                              <div class="col-md-6">
+                                  <div class="card">
+                                      <a class="lightbox" href="media/{{i.file}}">
+                                      <img src="media/{{i.file}}" alt="{{ i.post_id }}" class="card-img-top">
+                                      </a>
+                                  </div>
+                              </div>
+                             {% endifequal %}
+                              {% endfor %}
+                          </div>
+                      </div>
+
+                  </div>
+                  </div>
             <div class="card-body">
               <!--<h2 class="card-title">Post Title</h2>-->
               <p class="card-text">{{ post.text }}</p>
               <!--<a href="#" class="btn btn-primary">Read More &rarr;</a>-->
             </div>
             <div class="card-footer text-muted">
-              Posted on {{ post.published_date }} by 
+              Posted on {{ post.published_date }} by
               <a href="#">{{ post.user.first_name }} {{ post.user.last_name }}</a>
             </div>
           </div>

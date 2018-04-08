@@ -155,7 +155,6 @@
                   </div>
                 </div>
                 {% endfor %}
-              <a href="feed/subjects.html">files</a>
             </div>
           </div>
           <!-- Side Widget -->
@@ -236,7 +235,7 @@
     <div id="carouselContent" class="carousel slide" data-ride="carousel">
         <div class="carousel-inner" role="listbox">
             {% for question in questions %}
-            <div class="carousel-item active text-center p-5">
+            <div class="carousel-item text-center {% if forloop.first %} active {% endif %} p-5"  id="carousel">
                  <div class="container">
                  <h3>{{ question.question_text }}</h3>
                      {% for choice in choices %}
@@ -245,6 +244,11 @@
                   <label><input type="radio" name="option" value="{{ choice.pk }}">{{ choice.choice_text }}</label>
                   </div>
                         {% endif %}
+                     <script>
+
+                         carousel = document.getElementById('carousel')
+                         carousel.display = None
+                     </script>
                      {% endfor %}
                    <!--<button type="button" class="btn btn-primary"  href="">Submit</button>-->
                  </div>

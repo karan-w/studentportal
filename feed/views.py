@@ -143,6 +143,11 @@ def add_post(request):
 def search_posts(request):
     if request.method == "POST":
         posts_list = Post.objects.filter(text__iexact=request.POST['search_text'])[:50]
+        images = []
+        for postobj in posts_list:
+            i = Photo.objects.filter(post=postobj)
+            for j in i:
+                images.append(j)
         paginator = Paginator(posts_list, 10)
 
         page = request.GET.get('page', 1)
@@ -152,11 +157,16 @@ def search_posts(request):
             posts = paginator.page(1)
         except EmptyPage:
             posts = paginator.page(paginator.num_pages)
-        return render(request, 'feed/searchresults.html', {'posts': posts})
+        return render(request, 'feed/searchresults.html', {'posts': posts, 'images':images})
 
 @login_required
 def academics_posts(request):
     posts_list = Post.objects.filter(category__contains='AC')[:50]
+    images = []
+    for postobj in posts_list:
+        i = Photo.objects.filter(post=postobj)
+        for j in i:
+            images.append(j)
     paginator = Paginator(posts_list, 10)
 
     page = request.GET.get('page', 1)
@@ -166,11 +176,16 @@ def academics_posts(request):
         posts = paginator.page(1)
     except EmptyPage:
         posts = paginator.page(paginator.num_pages)
-    return render(request, 'feed/academics.html', {'posts': posts})
+    return render(request, 'feed/academics.html', {'posts': posts, 'images':images})
 
 @login_required
 def clubs_and_association_posts(request):
     posts_list = Post.objects.filter(category__contains='CA')[:50]
+    images = []
+    for postobj in posts_list:
+        i = Photo.objects.filter(post=postobj)
+        for j in i:
+            images.append(j)
     paginator = Paginator(posts_list, 10)
 
     page = request.GET.get('page', 1)
@@ -180,11 +195,16 @@ def clubs_and_association_posts(request):
         posts = paginator.page(1)
     except EmptyPage:
         posts = paginator.page(paginator.num_pages)
-    return render(request, 'feed/clubsassociations.html', {'posts': posts})
+    return render(request, 'feed/clubsassociations.html', {'posts': posts, 'images':images})
 
 @login_required
 def sports_posts(request):
     posts_list = Post.objects.filter(category__contains='SP')[:50]
+    images = []
+    for postobj in posts_list:
+        i = Photo.objects.filter(post=postobj)
+        for j in i:
+            images.append(j)
     paginator = Paginator(posts_list, 10)
 
     page = request.GET.get('page', 1)
@@ -194,7 +214,7 @@ def sports_posts(request):
         posts = paginator.page(1)
     except EmptyPage:
         posts = paginator.page(paginator.num_pages)
-    return render(request, 'feed/sports.html', {'posts': posts})
+    return render(request, 'feed/sports.html', {'posts': posts, 'images':images })
 
 @user_passes_test(check_if_faculty)
 def add_material(request):

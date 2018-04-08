@@ -6,21 +6,21 @@
 
     <!-- Page Heading -->
     <h4 class="my-4">
-      Notes
+      Previous Papers
     </h4>
 
     <div class="row">
 
-        {% for note in notes %}
+        {% for previous_paper in previous_papers %}
 
       <div class="col-lg-3 col-md-4 col-sm-6 portfolio-item">
         <div class="card h-100">
           <i class="fa fa-file-pdf-o" style="font-size:48px;color:red"></i>
           <div class="card-body">
             <h4 class="card-title">
-              <a href="/media/{{ note.file }}" target="_blank">{{ note.name }}</a>
+              <a href="/media/{{ previous_paper.file }}" target="_blank">{{ previous_paper.name }}</a>
             </h4>
-            <p class="card-text">{{ note.description }}</p>
+            <p class="card-text">{{ previous_paper.description }}</p>
           </div>
         </div>
           {% endfor %}
