@@ -41,11 +41,31 @@ class Photo(models.Model):
 
 class Semester(models.Model):
     sno = models.IntegerField()
-    subjects = models.ForeignKey('Course', on_delete=models.CASCADE)
 
 class Course(models.Model):
     name = models.CharField(max_length=20)
-
+    year = models.IntegerField()
+    DEPARTMENT_CHOICES = (
+        ('---', '---'),
+        ('CSE', 'Computer Science & Engineering'),
+        ('ECE', 'Electronics and Communication Engineering'),
+        ('MECH', 'Mechanical Engineering'),
+        ('MME', 'Metallurgy Engineering'),
+        ('CHE', 'Chemical Engineering'),
+        ('CIVIL', 'Civil Engineering'),
+        ('EEE', 'Electrical and Electronics Engineering'),
+        ('BIO', 'Biotechnology'),
+    )
+    YEAR_CHOICES = (
+        ('1st', '1st'),
+        ('2nd', '2nd'),
+        ('3rd', '3rd'),
+        ('4th', '4th'),
+    )
+    
+    department = models.CharField(max_length=10, choices=DEPARTMENT_CHOICES, blank=True, null=True)
+    year = models.CharField(max_length=20, choices=YEAR_CHOICES, blank=True, null=True)
+    semester = models.IntegerField(null=True)
     def __str__(self):
         return self.name
 

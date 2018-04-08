@@ -74,14 +74,18 @@ def feed(request):
     
     student=Student.objects.get(user=request.user)
     print(student)
-    course = Course.objects.all()
+    courses = Course.objects.filter(semester = student.semester, department = student.branch)
     if check_if_class_representative(request.user):
         print("cr")
-        return render(request, 'feed/cr_feed.html', {'posts':posts, 'images': images, 'course':course})
+        return render(request, 'feed/cr_feed.html', {'posts':posts, 'images': images, 'courses':courses})
     else:
         print("not cr")
+        print(student.semester)
+        print(student.branch)
+        print(courses)
+        
         tt = Timetable.objects.get(section=student.section, year=student.year, semester=student.semester)
-    return render(request, 'feed/feed.html', {'posts': posts, 'images': images, 'questions': questions, 'n' : range(5), 'choices':choices_list, 'tt':tt})
+    return render(request, 'feed/feed.html', {'posts': posts, 'images': images, 'questions': questions, 'n' : range(5), 'choices':choices_list, 'tt':tt, 'courses':courses})
 
 def update_timetable(request):
     if request.method=='POST':
@@ -208,14 +212,15 @@ def show_material(request):
 @login_required
 def view_assignments(request, course_id):
     assignments = CourseMaterial.objects.filter(course__pk=course_id, category='AS')
-    return render(request, 'feed/sports.html', {'assignments': assignments})
+    print(assignments)
+    return render(request, 'feed/assignments.html', {'assignments': assignments})
 
 @login_required
 def view_notes(request, course_id):
     notes = CourseMaterial.objects.filter(course__pk=course_id, category='NO')
-    return render(request, 'feed/sports.html', {'notes': notes})
+    return render(request, 'feed/notes.html', {'notes': notes})
 
 @login_required
 def view_previous_papers(request, course_id):
     previous_papers = CourseMaterial.objects.filter(course__pk=course_id, category='PP')
-    return render(request, 'feed/sports.html', {'previous_papers': previous_papers})
+    return render(request, 'feed/previous_papers.html', {'previous_papers': previous_papers})

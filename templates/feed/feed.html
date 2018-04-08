@@ -62,7 +62,9 @@
                         <div class="tz-gallery">
                             <div class="row mb-3">
                                 {% for i in images %}
-                                {% ifequal i.post_id p.id %}
+                                
+                              {% ifequal i.post_id post.id %}
+                               
                               <div class="col-md-6">
                                   <div class="card">
                                       <a class="lightbox" href="media/{{i.file}}">
@@ -70,7 +72,7 @@
                                       </a>
                                   </div>
                               </div>
-                              {% endifequal %}
+                             {% endifequal %}
                               {% endfor %}
                           </div>
                       </div>
@@ -140,20 +142,19 @@
           <div class="card my-4">
             <h5 class="card-header">Academics</h5>
             <div class="card-body">
-            <!--
-                {% for subject in subjects %}
+          
+                {% for course in courses %}
                 <div class="dropdown">
                   <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    {{ subject.subjectid }}
+                    {{ course.name }}
                   </button>
                   <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    <a class="dropdown-item" href="subjects.html">Assignments</a>
-                    <a class="dropdown-item" href="subjects.html">Previous Papers</a>
-                    <a class="dropdown-item" href="subjects.html">Notes</a>
+                    <a class="dropdown-item" href="/assignments/{{ course.pk }}">Assignments</a>
+                    <a class="dropdown-item" href="/previous_papers/{{ course.pk }}">Previous Papers</a>
+                    <a class="dropdown-item" href="/notes/{{ course.pk }}">Notes</a>
                   </div>
                 </div>
                 {% endfor %}
-              -->
               <a href="feed/subjects.html">files</a>
             </div>
           </div>
